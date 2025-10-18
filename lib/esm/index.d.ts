@@ -1,18 +1,24 @@
+/// <reference types="node" />
+/**
+ * The main types of Cheerio objects.
+ *
+ * @category Cheerio
+ */
+export type { Cheerio } from './cheerio.js';
 /**
  * Types used in signatures of Cheerio methods.
  *
  * @category Cheerio
  */
 export * from './types.js';
-import { getLoad } from './load.js';
-import { getParse } from './parse.js';
-import { renderWithParse5, parseWithParse5 } from './parsers/parse5-adapter.js';
-import renderWithHtmlparser2 from 'dom-serializer';
-import { parseDocument as parseWithHtmlparser2 } from 'htmlparser2';
-const parse = getParse((content, options, isDocument, context) => options.xmlMode || options._useHtmlParser2
-    ? parseWithHtmlparser2(content, options)
-    : parseWithParse5(content, options, isDocument, context));
-// Duplicate docs due to https://github.com/TypeStrong/typedoc/issues/1616
+export type { CheerioOptions, HTMLParser2Options, Parse5Options, } from './options.js';
+/**
+ * Re-exporting all of the node types.
+ *
+ * @category DOM Node
+ */
+export type { Node, AnyNode, ParentNode, Element, Document } from 'domhandler';
+export type { CheerioAPI } from './load.js';
 /**
  * Create a querying function, bound to a document created from the provided markup.
  *
@@ -26,15 +32,14 @@ const parse = getParse((content, options, isDocument, context) => options.xmlMod
  * @returns The loaded document.
  * @see {@link https://cheerio.js.org#loading} for additional usage information.
  */
-export const load = getLoad(parse, (dom, options) => options.xmlMode || options._useHtmlParser2
-    ? renderWithHtmlparser2(dom, options)
-    : renderWithParse5(dom));
+export declare const load: (content: string | import("domhandler").AnyNode | import("domhandler").AnyNode[] | Buffer, options?: import("./options.js").CheerioOptions | null | undefined, isDocument?: boolean) => import("./load.js").CheerioAPI;
 /**
  * The default cheerio instance.
  *
  * @deprecated Use the function returned by `load` instead.
  */
-export default load([]);
+declare const _default: import("./load.js").CheerioAPI;
+export default _default;
 export { html, xml, text } from './static.js';
 import * as staticMethods from './static.js';
 /**
@@ -56,7 +61,7 @@ import * as staticMethods from './static.js';
  *
  * @returns {boolean}
  */
-export const { contains } = staticMethods;
+export declare const contains: typeof staticMethods.contains;
 /**
  * In order to promote consistency with the jQuery library, users are encouraged
  * to instead use the static method of the same name.
@@ -71,7 +76,7 @@ export const { contains } = staticMethods;
  * //=> [1, 2, 3, 4]
  * ```
  */
-export const { merge } = staticMethods;
+export declare const merge: typeof staticMethods.merge;
 /**
  * In order to promote consistency with the jQuery library, users are encouraged
  * to instead use the static method of the same name as it is defined on the
@@ -85,7 +90,7 @@ export const { merge } = staticMethods;
  * $.parseHTML('<b>markup</b>');
  * ```
  */
-export const { parseHTML } = staticMethods;
+export declare const parseHTML: typeof staticMethods.parseHTML;
 /**
  * Users seeking to access the top-level element of a parsed document should
  * instead use the `root` static method of a "loaded" Cheerio function.
@@ -98,5 +103,5 @@ export const { parseHTML } = staticMethods;
  * $.root();
  * ```
  */
-export const { root } = staticMethods;
-//# sourceMappingURL=index.js.map
+export declare const root: typeof staticMethods.root;
+//# sourceMappingURL=index.d.ts.map
